@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locator/detail.dart';
+import 'package:locator/map.dart';
 import 'package:locator/webPage.dart';
 
 import 'Global.dart';
@@ -12,6 +13,7 @@ void main() {
       '/': (context) => const HomePage(),
       'detail': (context) => const DetailPage(),
       'web' : (context) => const WebPage(),
+      'map' : (context) => const MapPage(),
     },
   ));
 }

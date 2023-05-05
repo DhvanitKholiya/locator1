@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:locator/Global.dart';
+import 'package:geocoding/geocoding.dart';
+
+import 'Global.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -9,6 +11,9 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+
+  var placemark ;
+
   @override
   Widget build(BuildContext context) {
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
@@ -74,11 +79,18 @@ class _DetailPageState extends State<DetailPage> {
                 style: TextStyle(fontSize: 18),
               )),
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('web',arguments: data['webSite']);
+              onPressed: () async {
+                //List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
+                List<Placemark> placemarks = await  placemarkFromCoordinates(data['lat'], data['long']);
+                setState(() {
+                  placemark = placemarks[Global.companyInfo.length];
+
+
+                  Navigator.of(context).pushNamed('map',arguments: data);
+                });
               },
               child: Text(
-                "${data['lat']}",
+                "${data['lat']},${data['long']}",
                 style: const TextStyle(fontSize: 16, color: Colors.blue),
               )),
         ],
